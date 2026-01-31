@@ -1,4 +1,6 @@
-import { ProductsType } from "@/types/product";
+import type { ProductsType } from "@/types/product";
+import Categories from "../category/Categories";
+import ProductCard from "./ProductCard";
 
 // TEMPORARY
 const products: ProductsType = [
@@ -113,7 +115,17 @@ const products: ProductsType = [
 ];
 
 const ProductList = () => {
-  return <div>ProductList</div>;
+  return (
+    <div className="container-main">
+      <Categories />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        {products.map((product) => {
+          return <ProductCard key={product.id} product={product} />;
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default ProductList;
