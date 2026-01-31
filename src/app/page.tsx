@@ -1,5 +1,11 @@
+import HeroSection from "@/components/features/hero/HeroSection";
+
 const Homepage = () => {
-  return <div className="mt-0 mb-0.5 bg-amber-100 text-balance">Homepage</div>;
+  return (
+    <main>
+      <HeroSection />
+    </main>
+  );
 };
 
 export default Homepage;
