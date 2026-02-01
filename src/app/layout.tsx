@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ua">
-      <body className={`${inter_24pt.className} text-primary antialiased`}>
+      <body className={`${inter_24pt.className} antialiased`}>
         <Header />
         {children}
         <Footer />

@@ -57,16 +57,15 @@ const Categories = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-
   const selectedCategory = searchParams.get("category");
 
-  const handleChange = (cat: string | undefined) => {
+  const handleChange = (cat: string | null) => {
     const params = new URLSearchParams(searchParams);
+
     params.set("category", cat || "");
-    router.push(`/${pathname}?${params.toString()}`, { scroll: false });
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  console.log(searchParams, selectedCategory);
   return (
     <div className="bg-muted my-4 grid grid-cols-2 rounded-xl p-2 md:grid-cols-4 lg:grid-cols-8">
       {categories.map((category) => (

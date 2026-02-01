@@ -1,5 +1,7 @@
 import type { ProductsType } from "@/types/product";
+import Link from "next/link";
 import Categories from "../category/Categories";
+import Filter from "./Filter";
 import ProductCard from "./ProductCard";
 
 // TEMPORARY
@@ -114,16 +116,28 @@ const products: ProductsType = [
   },
 ];
 
-const ProductList = () => {
+type ProductListProp = {
+  category: string | null;
+  params: "homepage" | "products";
+};
+
+const ProductList = ({ category, params }: ProductListProp) => {
   return (
     <div className="container-main">
       <Categories />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      {params && <Filter />}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {products.map((product) => {
           return <ProductCard key={product.id} product={product} />;
         })}
       </div>
+      <Link
+        className="text-muted-foreground mt-4 flex justify-end text-sm underline"
+        href={category ? `products/?category=${category}` : "/products"}
+      >
+        View all products
+      </Link>
     </div>
   );
 };
