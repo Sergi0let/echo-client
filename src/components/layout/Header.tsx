@@ -1,6 +1,7 @@
-import { Bell, Home, ShoppingCart } from "lucide-react";
+import { Bell, Home } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import ShoppingCartIcon from "../features/cart/ShoppingCartIcon";
 import SearchBar from "../features/search/SearchBar";
 
 const Header = () => {
@@ -23,7 +24,7 @@ const Header = () => {
             <Home className="size-6" />
           </Link>
           <Bell className="size-6" />
-          <ShoppingCart className="size-6" />
+          <ShoppingCartIcon />
           <Link href={"/login"}>Sign In</Link>
         </div>
       </div>
