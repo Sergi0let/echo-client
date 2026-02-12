@@ -1,8 +1,12 @@
 "use client";
 
-import { CartItemsType } from "@/types/product";
-import { ArrowRight } from "lucide-react";
+import PaymentForm from "@/components/features/cart/PaymentForm";
+import ShippingForm from "@/components/features/cart/ShippingForm";
+import { CartItemsType, ShippingFormInputs } from "@/types/product";
+import { ArrowRight, Trash2 } from "lucide-react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const cartItems: CartItemsType = [
   {
@@ -22,7 +26,7 @@ const cartItems: CartItemsType = [
     },
     quantity: 1,
     selectedSize: "m",
-    selectedColor: "red",
+    selectedColor: "gray",
   },
   {
     id: 2,
@@ -36,8 +40,8 @@ const cartItems: CartItemsType = [
     colors: ["gray", "green"],
     images: { gray: "/products/2g.png", green: "/products/2gr.png" },
     quantity: 3,
-    selectedColor: "l",
-    selectedSize: "yellow",
+    selectedColor: "green",
+    selectedSize: "green",
   },
   {
     id: 3,
@@ -55,7 +59,7 @@ const cartItems: CartItemsType = [
       black: "/products/3bl.png",
     },
     quantity: 6,
-    selectedColor: "xxl",
+    selectedColor: "blue",
     selectedSize: "yellow",
   },
 ];
@@ -78,6 +82,7 @@ const steps = [
 const CartPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [shippingForm, setShippingForm] = useState<ShippingFormInputs>();
 
   const activeStep = parseInt(searchParams.get("step") || "1");
   const isActiveStep = (id: number) => id == activeStep;
@@ -108,9 +113,51 @@ const CartPage = () => {
       {/* STEPS & DETAILS */}
       <div className="flex w-full flex-col gap-16 lg:flex-row">
         <div className="border-muted flex w-full flex-col gap-8 rounded-lg border-1 p-8 shadow-lg lg:w-7/12">
-          1
+          {isActiveStep(1) ? (
+            cartItems.map((item) => (
+              <div className="flex items-center justify-between" key={item.id}>
+                <div className="flex gap-8">
+                  <div className="">
+                    <Image
+                      src={item.images[item.selectedColor]}
+                      width={64}
+                      height={64}
+                      alt={item.name}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm font-medium">{item.name}</p>
+                      <p className="text-muted-foreground text-xs">
+                        Quantity:{""} {item.quantity}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Size: {""}
+                        {item.selectedSize}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Color: {""}
+                        {item.selectedColor}
+                      </p>
+                    </div>
+                    <div className="font-medium">${item.price.toFixed(2)}</div>
+                  </div>
+                </div>
+                <button className="flex size-8 cursor-pointer items-center justify-center rounded-full bg-red-100 text-red-400 transition-all hover:bg-red-200">
+                  <Trash2 className="size-4" />
+                </button>
+              </div>
+            ))
+          ) : isActiveStep(2) ? (
+            <ShippingForm setShippingForm={setShippingForm} />
+          ) : isActiveStep(3) && shippingForm ? (
+            <PaymentForm />
+          ) : (
+            <p className="">Some</p>
+          )}
         </div>
-        <div className="border-muted flex w-full flex-col gap-8 rounded-lg border-1 p-8 shadow-lg lg:w-5/12">
+        <div className="border-muted flex h-max w-full flex-col gap-8 rounded-lg border-1 p-8 shadow-lg lg:w-5/12">
           <h2 className="font-semibold">Cart Details</h2>
           <div className="flex flex-col gap-4">
             <div className="flex justify-between">
