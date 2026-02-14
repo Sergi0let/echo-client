@@ -2,6 +2,7 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
 const inter_24pt = localFont({
@@ -31,6 +32,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <ToastContainer position="top-right" />
       </body>
     </html>
   );
