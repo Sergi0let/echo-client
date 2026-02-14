@@ -87,6 +87,8 @@ const CartPage = () => {
   const activeStep = parseInt(searchParams.get("step") || "1");
   const isActiveStep = (id: number) => id == activeStep;
 
+  // const {cart, removeCartSotre} =
+
   return (
     <main className="container-main mt-12 flex flex-col items-center justify-center gap-8">
       <h1 className="text-2xl font-medium">Your Shopping Cart</h1>
