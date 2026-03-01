@@ -25,13 +25,22 @@ type ProductPageProps = {
   params: Promise<{ id: string }>;
 };
 
+export const generateMetadata = async () => {
+  //TODO: get the product from db
+  // TEMPORARY
+  return {
+    title: product.name,
+    description: product.description,
+  };
+};
+
 const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
   const { color, size } = await searchParams;
   const selectedSize = size || (product.sizes[0] as string);
   const selectedColor = color || (product.colors[0] as string);
 
   return (
-    <div className="mt-12 flex flex-col gap-4 md:gap-12 lg:flex-row">
+    <div className="mt-24 flex flex-col gap-4 md:gap-12 lg:flex-row">
       <div className="relative aspect-[2/3] w-full lg:w-5/12">
         <Image
           alt={product.name}
