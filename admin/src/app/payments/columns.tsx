@@ -13,11 +13,13 @@ import {
 import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 
 export type Payment = {
   id: string;
   amount: number;
-  username: string;
+  fullName: string;
+  userId: string;
   email: string;
   status: "pending" | "processing" | "success" | "failed";
 };
@@ -42,7 +44,7 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "username",
+    accessorKey: "fullName`",
     header: "User",
   },
   {
@@ -71,7 +73,7 @@ export const columns: ColumnDef<Payment>[] = [
             `p-1 rounded-md w-max text-xs`,
             status === "pending" && "bg-yellow-500/40",
             status === "success" && "bg-green-500/40",
-            status === "failed" && "bg-red-500/40"
+            status === "failed" && "bg-red-500/40",
           )}
         >
           {status as string}
@@ -113,7 +115,9 @@ export const columns: ColumnDef<Payment>[] = [
               Copy payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/users/${payment.userId}`}>View customer</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
