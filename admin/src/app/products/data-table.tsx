@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   ColumnDef,
@@ -8,9 +8,9 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table'
 
-import { DataTablePagination } from "@/components/TablePagination";
+import { DataTablePagination } from '@/components/TablePagination'
 import {
   Table,
   TableBody,
@@ -18,21 +18,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Trash2 } from "lucide-react";
-import { useState } from "react";
+} from '@/components/ui/table'
+import { Trash2 } from 'lucide-react'
+import { useState } from 'react'
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  columns: ColumnDef<TData, TValue>[]
+  data: TData[]
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [rowSelection, setRowSelection] = useState({});
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
     data,
@@ -46,14 +46,14 @@ export function DataTable<TData, TValue>({
       sorting,
       rowSelection,
     },
-  });
+  })
 
   return (
-    <div className="rounded-md border">
+    <div className='rounded-md border'>
       {Object.keys(rowSelection).length > 0 && (
-        <div className="flex justify-end">
-          <button className="flex items-center gap-2 bg-red-500 text-white px-2 py-1 text-sm rounded-md m-4 cursor-pointer">
-            <Trash2 className="size-4" /> Deletet Product(s)
+        <div className='flex justify-end'>
+          <button className='flex items-center gap-2 bg-red-500 text-white px-2 py-1 text-sm rounded-md m-4 cursor-pointer'>
+            <Trash2 className='size-4' /> Deletet Product(s)
           </button>
         </div>
       )}
@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({
                           header.getContext(),
                         )}
                   </TableHead>
-                );
+                )
               })}
             </TableRow>
           ))}
@@ -81,8 +81,7 @@ export function DataTable<TData, TValue>({
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
+                data-state={row.getIsSelected() && 'selected'}>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -92,7 +91,7 @@ export function DataTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell colSpan={columns.length} className='h-24 text-center'>
                 No results.
               </TableCell>
             </TableRow>
@@ -102,5 +101,5 @@ export function DataTable<TData, TValue>({
 
       <DataTablePagination table={table} />
     </div>
-  );
+  )
 }
