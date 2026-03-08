@@ -4,6 +4,12 @@ const fastify = Fastify({
   logger: true,
 });
 
+fastify.get('/health', (request, reply) => {
+  return reply
+    .status(200)
+    .send({ status: 'ok', uptime: process.uptime(), timestamp: Date.now() });
+});
+
 /**
  * Run the server!
  */

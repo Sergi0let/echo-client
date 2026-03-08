@@ -1,5 +1,5 @@
 import cors from 'cors';
-import express from 'express';
+import express, { Request, Response } from 'express';
 
 const app = express();
 app.use(
@@ -8,6 +8,14 @@ app.use(
     credentials: true,
   })
 );
+
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'ok',
+    uptime: process.uptime(),
+    timestamp: Date.now(),
+  });
+});
 
 app.listen(8000, () => {
   console.log('Product Service is running 8000');
