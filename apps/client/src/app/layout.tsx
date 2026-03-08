@@ -5,6 +5,8 @@ import localFont from 'next/font/local';
 import { ToastContainer } from 'react-toastify';
 import './globals.css';
 
+import { ClerkProvider } from '@clerk/nextjs';
+
 const inter_24pt = localFont({
   src: [
     { path: './fonts/Inter_24pt-Regular.woff2', weight: '400' },
@@ -29,10 +31,12 @@ export default function RootLayout({
   return (
     <html lang="ua">
       <body className={`${inter_24pt.className} antialiased`}>
-        <Header />
-        {children}
-        <Footer />
-        <ToastContainer position="top-right" />
+        <ClerkProvider>
+          <Header />
+          {children}
+          <Footer />
+          <ToastContainer position="top-right" />
+        </ClerkProvider>
       </body>
     </html>
   );
