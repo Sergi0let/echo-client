@@ -1,9 +1,12 @@
 import { clerkMiddleware } from '@clerk/express';
 import cors from 'cors';
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { shouldBeUser } from './middleware/authMiddleware.js';
+import categoryRouter from './route/category.route.js';
+import productRouter from './route/product.route.js';
 
 const app = express();
+const port = Number(process.env.PORT ?? 8004);
 
 app.use(
   cors({
@@ -12,8 +15,6 @@ app.use(
   })
 );
 
-app.use(clerkMiddleware());
-
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'ok',
@@ -21,6 +22,9 @@ app.get('/health', (req: Request, res: Response) => {
     timestamp: Date.now(),
   });
 });
+
+app.use(express.json);
+app.use(clerkMiddleware());
 
 app.get('/test', shouldBeUser, (req, res) => {
   res.json({
@@ -31,6 +35,16 @@ app.get('/test', shouldBeUser, (req, res) => {
   });
 });
 
-app.listen(8000, () => {
-  console.log('Product Service is running 8000');
+app.use('/products', productRouter);
+app.use('/categories', categoryRouter);
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
+  return res
+    .status(err.status || 500)
+    .json({ message: err.message || 'Inter Server Error' });
+});
+
+app.listen(port, () => {
+  console.log(`Product Service is running on port ${port}`);
 });
