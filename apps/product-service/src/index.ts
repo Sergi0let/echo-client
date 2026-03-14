@@ -23,10 +23,8 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-app.use(express.json);
-app.use(clerkMiddleware());
-
-app.get('/test', shouldBeUser, (req, res) => {
+app.use(express.json());
+app.get('/test', clerkMiddleware(), shouldBeUser, (req, res) => {
   res.json({
     status: 'ok',
     message: 'Product service is authenticated',

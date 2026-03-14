@@ -6,7 +6,7 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio --port 5555"
   },
   "devDependencies": {
     "@types/node": "^25.4.0",
@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "@prisma/client": "^7.4.2",
-    "@repo/typescript-config": "workspace:*"
+    "@repo/typescript-config": "workspace:*",
+    "dotenv": "^17.3.1"
   },
   "exports": {
     ".": "./src/index.ts"
