@@ -7,6 +7,7 @@ export const shouldBeUser = createMiddleware<{
   };
 }>(async (c, next) => {
   const auth = getAuth(c);
+  console.log(auth);
 
   if (!auth?.userId) {
     return c.json({ message: 'You are not logged in.' });

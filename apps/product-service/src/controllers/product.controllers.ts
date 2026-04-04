@@ -47,7 +47,10 @@ export const updateProduct = async (req: Request, res: Response) => {
     });
     return res.status(200).json(updatedProduct);
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2025') {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code === 'P2025'
+    ) {
       return res.status(404).json({ message: 'Product not found' });
     }
     throw e;
@@ -66,7 +69,10 @@ export const deleteProduct = async (req: Request, res: Response) => {
     });
     return res.status(200).json(deletedProduct);
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2025') {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code === 'P2025'
+    ) {
       return res.status(404).json({ message: 'Product not found' });
     }
     throw e;
