@@ -1,4 +1,8 @@
-import { CartStoreActionsType, CartStoreStateType } from '@/types/product';
+import type {
+  CartItemType,
+  CartStoreActionsType,
+  CartStoreStateType,
+} from '@repo/types';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -7,10 +11,10 @@ const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
     (set) => ({
       cart: [],
       hasHydrated: false,
-      addToCart: (product) =>
+      addToCart: (product: CartItemType) =>
         set((state) => {
           const existingIndex = state.cart.findIndex(
-            (p) =>
+            (p: CartItemType) =>
               p.id === product.id &&
               p.selectedSize === product.selectedSize &&
               p.selectedColor === product.selectedColor

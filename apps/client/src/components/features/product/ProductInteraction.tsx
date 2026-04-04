@@ -1,7 +1,7 @@
 'use client';
 
 import useCartStore from '@/store/cartStore';
-import { ProductType } from '@/types/product';
+import type { ProductType } from '@repo/types';
 import { Minus, Plus, ShoppingBag } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -58,7 +58,7 @@ const ProductInteraction = ({
         <div className="flex items-center gap-2">
           {product.sizes.map((size) => (
             <div
-              className={`cursor-pointer border-1 p-[2px] ${selectedSize === size ? 'border-gray-600' : 'border-gray-300'}`}
+              className={`cursor-pointer border p-[2px] ${selectedSize === size ? 'border-gray-600' : 'border-gray-300'}`}
               key={size}
               onClick={() => handleTypeChange('size', size)}
             >
@@ -73,7 +73,7 @@ const ProductInteraction = ({
         <div className="flex items-center gap-2">
           {product.colors.map((color) => (
             <div
-              className={`cursor-pointer border-1 p-[2px] ${selectedColor === color ? 'border-gray-600' : 'border-white'}`}
+              className={`cursor-pointer border p-[2px] ${selectedColor === color ? 'border-gray-600' : 'border-white'}`}
               key={color}
               onClick={() => handleTypeChange('color', color)}
             >
@@ -87,14 +87,14 @@ const ProductInteraction = ({
         <span className="text-gray-500">Quantity</span>
         <div className="flex gap-3">
           <button
-            className="cursor-pointer border-1 border-gray-300 p-1"
+            className="cursor-pointer border border-gray-300 p-1"
             onClick={() => handleQuantityChange('decrement')}
           >
             <Minus className="size-4" />
           </button>
           <span>{quantity}</span>
           <button
-            className="cursor-pointer border-1 border-gray-300 p-1"
+            className="cursor-pointer border border-gray-300 p-1"
             onClick={() => handleQuantityChange('increment')}
           >
             <Plus className="size-4" />

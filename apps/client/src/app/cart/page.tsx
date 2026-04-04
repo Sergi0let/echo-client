@@ -3,7 +3,7 @@
 import PaymentForm from '@/components/features/cart/PaymentForm';
 import ShippingForm from '@/components/features/cart/ShippingForm';
 import useCartStore from '@/store/cartStore';
-import { ShippingFormInputs } from '@/types/product';
+import { CartItemType, ShippingFormInputs } from '@repo/types';
 import { ArrowRight, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -115,9 +115,9 @@ const CartPage = () => {
       </div>
       {/* STEPS & DETAILS */}
       <div className="flex w-full flex-col gap-16 lg:flex-row">
-        <div className="border-muted flex w-full flex-col gap-8 rounded-lg border-1 p-8 shadow-lg lg:w-7/12">
+        <div className="border-muted flex w-full flex-col gap-8 rounded-lg border p-8 shadow-lg lg:w-7/12">
           {isActiveStep(1) ? (
-            cart.map((item) => (
+            cart.map((item: CartItemType) => (
               <div
                 className="flex items-center justify-between"
                 key={item.id + item.selectedColor + item.selectedSize}
@@ -125,7 +125,11 @@ const CartPage = () => {
                 <div className="flex gap-8">
                   <div className="">
                     <Image
-                      src={item.images?.[item.selectedColor] || ''}
+                      src={
+                        (item.images as Record<string, string>)?.[
+                          item.selectedColor
+                        ] || ''
+                      }
                       width={64}
                       height={64}
                       alt={item.name}
@@ -166,7 +170,7 @@ const CartPage = () => {
             <p className="">Some</p>
           )}
         </div>
-        <div className="border-muted flex h-max w-full flex-col gap-8 rounded-lg border-1 p-8 shadow-lg lg:w-5/12">
+        <div className="border-muted flex h-max w-full flex-col gap-8 rounded-lg border p-8 shadow-lg lg:w-5/12">
           <h2 className="font-semibold">Cart Details</h2>
           <div className="flex flex-col gap-4">
             <div className="flex justify-between">
@@ -174,7 +178,11 @@ const CartPage = () => {
               <p className="font-medium">
                 $
                 {cart
-                  .reduce((acc, item) => acc + item.price * item.quantity, 0)
+                  .reduce(
+                    (acc: number, item: CartItemType) =>
+                      acc + item.price * item.quantity,
+                    0
+                  )
                   .toFixed(2)}
               </p>
             </div>

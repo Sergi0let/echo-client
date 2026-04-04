@@ -1,6 +1,7 @@
 'use client';
 
 import useCartStore from '@/store/cartStore';
+import type { CartItemType } from '@repo/types';
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 
@@ -12,7 +13,7 @@ const ShoppingCartIcon = () => {
     <Link href={'/cart'} className="relative size-6">
       <ShoppingCart className="size-6 text-white" />
       <span className="bg-success absolute -top-3 -right-3 flex size-5 items-center justify-center rounded-full text-xs font-medium text-white">
-        {cart.reduce((acc, el) => acc + el.quantity, 0)}
+        {cart.reduce((acc: number, el: CartItemType) => acc + el.quantity, 0)}
       </span>
     </Link>
   );

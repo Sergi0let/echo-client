@@ -1,7 +1,7 @@
 'use client';
 
 import useCartStore from '@/store/cartStore';
-import { ProductType } from '@/types/product';
+import type { ProductType } from '@repo/types';
 import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,8 +14,8 @@ type ProductCardType = {
 
 const ProductCard = ({ product }: ProductCardType) => {
   const [productTypes, setProductTypes] = useState({
-    size: product.sizes[0],
-    color: product.colors[0],
+    size: product.sizes[0] as string,
+    color: product.colors[0] as string,
   });
 
   const { addToCart } = useCartStore();
@@ -47,9 +47,13 @@ const ProductCard = ({ product }: ProductCardType) => {
     <div className="overflow-hidden rounded-lg shadow-lg">
       <Link href={`/products/${product.id}`}>
         {/* IMAGES */}
-        <div className="relative aspect-[2/3]">
+        <div className="relative aspect-2/3">
           <Image
-            src={product.images[productTypes?.color || '1'] || ''}
+            src={
+              (product.images as Record<string, string>)?.[
+                productTypes?.color || '1'
+              ] || ''
+            }
             alt={product.name}
             fill
             className="object-cover transition-all duration-300 hover:scale-105"
@@ -89,7 +93,7 @@ const ProductCard = ({ product }: ProductCardType) => {
             <div className="flex items-center gap-2">
               {product.colors.map((color) => (
                 <div
-                  className={`cursor-pointer rounded-full border-1 p-0.5 ${productTypes.color === color ? 'border-muted-foreground' : 'border-border'}`}
+                  className={`cursor-pointer rounded-full border p-0.5 ${productTypes.color === color ? 'border-muted-foreground' : 'border-border'}`}
                   key={color}
                   onClick={() =>
                     handleProductType({ type: 'color', value: color })

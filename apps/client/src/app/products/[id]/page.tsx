@@ -1,5 +1,5 @@
 import ProductInteraction from '@/components/features/product/ProductInteraction';
-import { ProductType } from '@/types/product';
+import type { ProductType } from '@repo/types';
 import Image from 'next/image';
 
 // TEMPORARY
@@ -18,6 +18,9 @@ const product: ProductType = {
     purple: '/products/1p.png',
     green: '/products/1gr.png',
   },
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  categorySlug: 't-shirts',
 };
 
 type ProductPageProps = {
@@ -41,10 +44,12 @@ const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
 
   return (
     <div className="mt-24 flex flex-col gap-4 md:gap-12 lg:flex-row">
-      <div className="relative aspect-[2/3] w-full lg:w-5/12">
+      <div className="relative aspect-2/3 w-full lg:w-5/12">
         <Image
           alt={product.name}
-          src={product.images?.[selectedColor] || ''}
+          src={
+            (product.images as Record<string, string>)?.[selectedColor] || ''
+          }
           fill
           className="rounded-md object-contain"
         />
