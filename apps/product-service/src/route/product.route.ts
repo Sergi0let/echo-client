@@ -6,12 +6,13 @@ import {
   getProducts,
   updateProduct,
 } from '../controllers/product.controllers.js';
+import { shouldBeAdmin } from '../middleware/authMiddleware.js';
 
 const router: Router = Router();
 
-router.post('/', createProduct);
-router.put('/:id', updateProduct);
-router.delete('/:id', deleteProduct);
+router.post('/', shouldBeAdmin, createProduct);
+router.put('/:id', shouldBeAdmin, updateProduct);
+router.delete('/:id', shouldBeAdmin, deleteProduct);
 router.get('/', getProducts);
 router.get('/:id', getProduct);
 

@@ -1,6 +1,8 @@
 import { clerkPlugin } from '@clerk/fastify';
 import Fastify from 'fastify';
 import { shouldBeUser } from './middleware/authMiddleware.js';
+import { connectOrderDB } from '@repo/order-db';
+import { orderRoute } from './route/order.js';
 
 const fastify = Fastify({
   logger: true,
@@ -18,18 +20,22 @@ fastify.get('/test', { preHandler: shouldBeUser }, async (request, reply) => {
   return reply.status(200).send({
     status: 'ok',
     message: 'Order service is authenticated',
-    
+
     timestamp: Date.now(),
   });
 });
+
+fastify.register(orderRoute);
 /**
  * Run the server!
  */
 const start = async () => {
   try {
+    await connectOrderDB();
     await fastify.listen({ port: 8001 });
     console.log('Order Service is running on port 8001');
   } catch (err) {
+    console.error('Error connecting to order database', err);
     fastify.log.error(err);
     process.exit(1);
   }
